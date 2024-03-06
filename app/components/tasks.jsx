@@ -21,11 +21,14 @@ export default function Tasks() {
   return (
     <div className="w-[736px]">
       <TasksInfo className={"mb-6"} />
-      <ul className="flex flex-col gap-y-3">
-        {tasks.map((task) => (
-          <Task key={task.id} content={task.content} done={task.done} />
-        ))}
-      </ul>
+      {tasks.length > 0 && (
+        <ul className="flex flex-col gap-y-3">
+          {tasks.map((task) => (
+            <Task key={task.id} content={task.content} done={task.done} />
+          ))}
+        </ul>
+      )}
+      {tasks.length == 0 && <NoTasks />}
     </div>
   );
 }
