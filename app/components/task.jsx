@@ -1,7 +1,6 @@
 import clsx from "clsx";
 
 export default function Task({ content, done }) {
-  console.log(done);
   return (
     <li className="flex justify-between gap-x-3 p-4 rounded-lg border border-[#333] bg-[#262626] cursor-pointer">
       <label className="flex justify-center items-center w-6 h-6 cursor-pointer">
