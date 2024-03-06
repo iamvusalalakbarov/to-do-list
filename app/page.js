@@ -1,3 +1,9 @@
+import TodoLogo from "./ui/todo-logo";
+
 export default function Home() {
-  return <h1>To Do List</h1>;
+  return (
+    <>
+      <TodoLogo className={"mt-3 mb-[53px]"} />
+    </>
+  );
 }
