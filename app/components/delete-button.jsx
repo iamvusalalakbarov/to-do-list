@@ -1,6 +1,12 @@
-export default function DeleteButton() {
+export default function DeleteButton({ onDelete }) {
   return (
-    <button className="group flex justify-center items-center w-6 h-6 rounded hover:bg-[#333] transition">
+    <button
+      className="group flex justify-center items-center w-6 h-6 rounded hover:bg-[#333] transition"
+      onClick={(e) => {
+        e.stopPropagation();
+        onDelete();
+      }}
+    >
       <svg
         width="24"
         height="24"

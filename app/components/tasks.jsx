@@ -4,7 +4,7 @@ import TasksInfo from "./tasks-info";
 import NoTasks from "./no-tasks";
 import Task from "./task";
 
-export default function Tasks({ tasks, onTaskClick }) {
+export default function Tasks({ tasks, onTaskClick, onTaskDelete }) {
   return (
     <div className="w-[736px]">
       <TasksInfo className={"mb-6"} tasks={tasks} />
@@ -16,6 +16,7 @@ export default function Tasks({ tasks, onTaskClick }) {
               content={task.content}
               done={task.done}
               onClick={() => onTaskClick(task)}
+              onDelete={() => onTaskDelete(task)}
             />
           ))}
         </ul>

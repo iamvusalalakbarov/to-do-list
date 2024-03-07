@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import DeleteButton from "./delete-button";
 
-export default function Task({ content, done, onClick }) {
+export default function Task({ content, done, onClick, onDelete }) {
   return (
     <li
       className="flex justify-between gap-x-3 p-4 rounded-lg border border-[#333] bg-[#262626] cursor-pointer"
@@ -29,7 +29,7 @@ export default function Task({ content, done, onClick }) {
       >
         {content}
       </p>
-      <DeleteButton />
+      <DeleteButton onDelete={onDelete} />
     </li>
   );
 }
