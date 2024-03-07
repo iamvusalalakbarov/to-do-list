@@ -6,7 +6,13 @@ import Tasks from "./components/tasks";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-const initialTasks = [];
+const initialTasks = [
+  {
+    id: 1,
+    content: "sen",
+    done: false,
+  },
+];
 
 export default function Home() {
   const [value, setValue] = useState("");
@@ -30,6 +36,18 @@ export default function Home() {
     }
   }
 
+  function handleTaskClick(task) {
+    const taskId = task.id;
+    const nextTasks = tasks.map((t) => {
+      if (t.id == taskId) {
+        return { ...t, done: !t.done };
+      }
+      return t;
+    });
+
+    setTasks(nextTasks);
+  }
+
   return (
     <>
       <TodoLogo className={"mt-16 mb-12"} />
@@ -39,7 +57,7 @@ export default function Home() {
         onChange={(e) => setValue(e.target.value)}
         onSubmit={(e) => handleSubmit(e)}
       />
-      <Tasks tasks={tasks} />
+      <Tasks tasks={tasks} onTaskClick={handleTaskClick} />
     </>
   );
 }
