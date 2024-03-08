@@ -3,29 +3,43 @@
 import TodoLogo from "./components/todo-logo";
 import Form from "./components/form";
 import Tasks from "./components/tasks";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-
-const initialTasks = [];
 
 export default function Home() {
   const [value, setValue] = useState("");
-  const [tasks, setTasks] = useState(initialTasks);
+  const [tasks, setTasks] = useState([]);
+
+  function setTasksInLocalStorage(tasks) {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+
+  function getTasksFromLocalStorage() {
+    const storedTasks = localStorage.getItem("tasks");
+    return storedTasks ? JSON.parse(storedTasks) : [];
+  }
+
+  useEffect(() => {
+    const initialTasks = getTasksFromLocalStorage();
+    setTasks(initialTasks);
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
     const trimmedValue = value.trim();
 
     if (trimmedValue.length > 0) {
-      setTasks([
+      const nextTasks = [
         ...tasks,
         {
           id: uuidv4(),
           content: trimmedValue,
           done: false,
         },
-      ]);
+      ];
 
+      setTasks(nextTasks);
+      setTasksInLocalStorage(nextTasks);
       setValue("");
     }
   }
@@ -40,11 +54,13 @@ export default function Home() {
     });
 
     setTasks(nextTasks);
+    setTasksInLocalStorage(nextTasks);
   }
 
   function handleTaskDelete(task) {
     const nextTasks = tasks.filter((t) => t.id != task.id);
     setTasks(nextTasks);
+    setTasksInLocalStorage(nextTasks);
   }
 
   return (
