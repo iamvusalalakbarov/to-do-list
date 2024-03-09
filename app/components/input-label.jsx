@@ -1,6 +1,9 @@
-export default function InputLabel({ value, onChange }) {
+export default function InputLabel({ value, onChange, inputLabelRef }) {
   return (
-    <label className="block w-full md:w-[638px] p-4 rounded-lg border border-[#0D0D0D] bg-[#262626] focus-within:border-[#5E60CE]">
+    <label
+      ref={inputLabelRef}
+      className="block w-full md:w-[638px] p-4 rounded-lg border border-[#0D0D0D] bg-[#262626] focus-within:border-[#5E60CE]"
+    >
       <input
         type="text"
         placeholder="Add a new task"

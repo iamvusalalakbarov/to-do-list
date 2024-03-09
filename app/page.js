@@ -3,12 +3,13 @@
 import TodoLogo from "./components/todo-logo";
 import Form from "./components/form";
 import Tasks from "./components/tasks";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Home() {
   const [value, setValue] = useState("");
   const [tasks, setTasks] = useState([]);
+  const inputLabelRef = useRef(null);
 
   function setTasksInLocalStorage(tasks) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -42,6 +43,8 @@ export default function Home() {
       setTasksInLocalStorage(nextTasks);
       setValue("");
     }
+
+    inputLabelRef.current.focus();
   }
 
   function handleTaskClick(task) {
@@ -71,6 +74,7 @@ export default function Home() {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onSubmit={(e) => handleSubmit(e)}
+        inputLabelRef={inputLabelRef}
       />
       <Tasks
         tasks={tasks}
