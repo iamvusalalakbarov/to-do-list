@@ -10,13 +10,14 @@ export default function Home() {
   const [value, setValue] = useState("");
   const [tasks, setTasks] = useState([]);
   const inputLabelRef = useRef(null);
+  const localStorageKey = "tasks";
 
   function setTasksInLocalStorage(tasks) {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem(localStorageKey, JSON.stringify(tasks));
   }
 
   function getTasksFromLocalStorage() {
-    const storedTasks = localStorage.getItem("tasks");
+    const storedTasks = localStorage.getItem(localStorageKey);
     return storedTasks ? JSON.parse(storedTasks) : [];
   }
 
