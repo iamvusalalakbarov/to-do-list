@@ -6,7 +6,7 @@ import Task from "./task";
 
 export default function Tasks({ tasks, onTaskClick, onTaskDelete }) {
   return (
-    <div className="w-[736px]">
+    <div className="w-full md:w-[736px]">
       <TasksInfo className={"mb-6"} tasks={tasks} />
       {tasks.length > 0 && (
         <ul className="flex flex-col gap-y-3 mb-8">

@@ -65,7 +65,7 @@ export default function Home() {
 
   return (
     <>
-      <TodoLogo className={"mt-16 mb-12"} />
+      <TodoLogo className={"mt-16 mb-8 md:mb-12"} />
       <Form
         className={"mb-16"}
         value={value}

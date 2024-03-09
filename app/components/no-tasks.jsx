@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function NoTasks() {
   return (
-    <div className="flex flex-col justify-center items-center p-16 rounded-sm border-t border-[#333]">
+    <div className="flex flex-col justify-center items-center p-8 md:p-16 rounded-sm border-t border-[#333]">
       <Image
         src="/clipboard.png"
         alt="Clipboard"
