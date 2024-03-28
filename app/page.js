@@ -1,87 +1,15 @@
-"use client";
-
+import { getSession } from "@/lib";
 import TodoLogo from "./components/todo-logo";
-import Form from "./components/form";
-import Tasks from "./components/tasks";
-import { useState, useEffect, useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
+import ServerTasks from "./components/server-tasks";
+import ClientTasks from "./components/client-tasks";
 
-export default function Home() {
-  const [value, setValue] = useState("");
-  const [tasks, setTasks] = useState([]);
-  const inputLabelRef = useRef(null);
-  const localStorageKey = "tasks";
-
-  function setTasksInLocalStorage(tasks) {
-    localStorage.setItem(localStorageKey, JSON.stringify(tasks));
-  }
-
-  function getTasksFromLocalStorage() {
-    const storedTasks = localStorage.getItem(localStorageKey);
-    return storedTasks ? JSON.parse(storedTasks) : [];
-  }
-
-  useEffect(() => {
-    const initialTasks = getTasksFromLocalStorage();
-    setTasks(initialTasks);
-  }, []);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    const trimmedValue = value.trim();
-
-    if (trimmedValue.length > 0) {
-      const nextTasks = [
-        ...tasks,
-        {
-          id: uuidv4(),
-          content: trimmedValue,
-          done: false,
-        },
-      ];
-
-      setTasks(nextTasks);
-      setTasksInLocalStorage(nextTasks);
-      setValue("");
-    }
-
-    inputLabelRef.current.focus();
-  }
-
-  function handleTaskClick(task) {
-    const taskId = task.id;
-    const nextTasks = tasks.map((t) => {
-      if (t.id == taskId) {
-        return { ...t, done: !t.done };
-      }
-      return t;
-    });
-
-    setTasks(nextTasks);
-    setTasksInLocalStorage(nextTasks);
-  }
-
-  function handleTaskDelete(task) {
-    const nextTasks = tasks.filter((t) => t.id != task.id);
-    setTasks(nextTasks);
-    setTasksInLocalStorage(nextTasks);
-  }
+export default async function Home() {  
+  const session = await getSession();
 
   return (
     <>
-      <TodoLogo className={"mt-16 mb-8 md:mb-12"} />
-      <Form
-        className={"mb-16"}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        onSubmit={(e) => handleSubmit(e)}
-        inputLabelRef={inputLabelRef}
-      />
-      <Tasks
-        tasks={tasks}
-        onTaskClick={handleTaskClick}
-        onTaskDelete={handleTaskDelete}
-      />
+      <TodoLogo name={"to do"} className={"mt-16 mb-8 md:mb-12"} />
+      {!!session?.user ? <ServerTasks user={session.user} /> : <ClientTasks />}
     </>
   );
 }
